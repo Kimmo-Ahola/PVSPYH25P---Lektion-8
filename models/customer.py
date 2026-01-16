@@ -7,7 +7,7 @@ str_255 = Annotated[str, mapped_column(db.String(255))]
 str_100 = Annotated[str, mapped_column(db.String(100))]
 
 
-class User(db.Model):
+class Customer(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str_100]
     email: Mapped[str_255]
@@ -21,4 +21,4 @@ class User(db.Model):
 
     # Relationship
     # One user can have many accounts = list
-    accounts: Mapped[List["Account"]] = relationship(back_populates="user")
+    accounts: Mapped[List["Account"]] = relationship(back_populates="customer")

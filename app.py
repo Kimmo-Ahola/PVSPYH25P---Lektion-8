@@ -1,25 +1,44 @@
-from flask import Flask, render_template
+# introduction to flask-wtforms
+# a way to improve forms with better security, built in validators etc.
+# https://flask-wtf.readthedocs.io/en/1.2.x/
+
+# pip install flask-wtforms
+
+
+from flask import Flask, redirect, render_template, url_for
 from flask_migrate import Migrate
-from routes.customer_route import customer_bp
+from routes.customer_route import customers_bp
 from database import db
 from seeding import seed_database
 import models
 
 app = Flask(__name__)
 
-# Vi skippar .env i detta exempel. 
+# Vi skippar .env i detta exempel.
 # Se till att ni har denna databas skapad innan ni kör appen
 app.config["SQLALCHEMY_DATABASE_URI"] = (
     "mysql+pymysql://user:user123@localhost:3306/delete_me"
 )
 db.init_app(app)
 migrate = Migrate(app, db)
-app.register_blueprint(customer_bp)
+
+# register customer routes
+app.register_blueprint(customers_bp)
+
+
+@app.route("/form")
+def example():
+    return render_template("classic-form-example.html")
 
 
 @app.route("/")
 def home():
-    return render_template("index.html")
+    # from flask import redirect, url_for
+    # redirect = vi dirigerar om till en annan sida
+    # url_for = vi bygger en länk dynamiskt.
+    # customers i detta fall är namespace till vår blueprint
+    # get_all är namnet på funktionen inuti customers namespace
+    return redirect(url_for("customers.get_all"))
 
 
 if __name__ == "__main__":

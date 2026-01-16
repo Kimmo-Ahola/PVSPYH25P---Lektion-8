@@ -3,18 +3,18 @@ import random
 from faker import Faker
 
 from models.account import Account
-from models.user import User
+from models.customer import Customer
 
 
 def seed_database(db):
-    if not db.session.query(User).first():
+    if not db.session.query(Customer).first():
         print("Seeding!")
         min_amount = 0
         max_amount = 10**5  # 10^5
-        users: list[User] = []
+        customers: list[Customer] = []
         fake = Faker("sv_SE")
         for _ in range(10):
-            new_user = User(
+            new_customer = Customer(
                 name=fake.name(),
                 email=fake.unique.email(),
                 address=fake.address(),
@@ -27,12 +27,12 @@ def seed_database(db):
             )
 
             if random.random() > 0.5:
-                new_user.telephone = fake.phone_number()
-                new_user.secondary_address = fake.address()
-                new_user.national_id = fake.ssn()
+                new_customer.telephone = fake.phone_number()
+                new_customer.secondary_address = fake.address()
+                new_customer.national_id = fake.ssn()
 
-            users.append(new_user)
-        db.session.add_all(users)
+            customers.append(new_customer)
+        db.session.add_all(customers)
         db.session.commit()
     else:
         print("Seeding already done!")

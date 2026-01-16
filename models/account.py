@@ -3,13 +3,13 @@ from database import db
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import DECIMAL
 
+
 class Account(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
     balance: Mapped[Decimal] = mapped_column(DECIMAL(12, 3))
 
-    user_id: Mapped[int] = mapped_column(db.ForeignKey("user.id"))
-
+    user_id: Mapped[int] = mapped_column(db.ForeignKey("customer.id"))
 
     # Relationships
     # One account belongs to one user
-    user: Mapped["User"] = relationship(back_populates="accounts")
+    customer: Mapped["Customer"] = relationship(back_populates="accounts")
