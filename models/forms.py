@@ -29,17 +29,25 @@ def is_adult():
     return _is_adult
 
 
+# Hiddenfields are used for fields that are not visible. Sometimes useful to send in "hidden" ids or similar.
+# You might need it in some cases.
 class AccountDepositForm(FlaskForm):
+    # Sometimes we need hidden fields to send in hidden data.
+    # You have to figure out which one to use yourself.
     receiving_account_id = HiddenField()
     amount = DecimalField()
 
 
 class AccountWithdrawForm(FlaskForm):
+    # Sometimes we need hidden fields to send in hidden data.
+    # You have to figure out which one to use yourself.
     withdrawing_account_id = HiddenField()
     amount = DecimalField()
 
 
 class AccountTransferForm(FlaskForm):
+    # Sometimes we need hidden fields to send in hidden data.
+    # You have to figure out which one to use yourself.
     withdrawing_account_id = HiddenField()
     receiving_account_id = HiddenField()
     amount = DecimalField()
